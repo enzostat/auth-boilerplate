@@ -1,0 +1,9 @@
+<% if (alerts && alerts.error) {%>
+	<div class="error-box">
+		<h2>Error:</h2>
+		<hr>
+		<% alerts.error.forEach(msg => {%>
+			<p><%= msg%></p>
+		<% })%>
+	</div>
+<% }%>

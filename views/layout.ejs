@@ -7,6 +7,10 @@
 </head>
 <body>
 	<%- include ./partials/header.ejs%>
-	<%- body %>
+	<div class="container">
+		<% include ./partials/alerts %>
+		<%- body %>
+	</div>
+	<% include ./partials/footer%>
 </body>
 </html>
