@@ -9,7 +9,7 @@ router.get('/signup', (req,res) => {
 	res.render('auth/signup')
 })
 
-router.post('/signup', (req,res) => {
+router.post('/signup', (req,res, next) => {
 	if (req.body.password !== req.body.password_verify) {
 		req.flash('error', "Passwords do not match!");
 		res.redirect('/auth/signup');
@@ -22,7 +22,12 @@ router.post('/signup', (req,res) => {
 		.spread((user, wasCreated) => {
 			if (wasCreated) {
 				//this was legitimately a new user so they got created
-				res.send('Successful creation of user. TODO: Auto login');
+				passport.authenticate('local', {
+					successRedirect: '/profile',
+					successFlash: 'Successful sign up. Welcome!',
+					failureRedirect: '/auth/login',
+					failureFlash: 'This should never happen. Contact your administrator.'
+				})(req, res, next);
 			} else {
 				//user was found, don't let them create a new account, make them log in
 				req.flash('error', "Account already exists. Please log in!");

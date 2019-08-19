@@ -28,6 +28,7 @@ app.use(passport.session());
 //Custom middleware: write data to locals for EVERY page
 app.use((req,res, next) => {
 	res.locals.alerts = req.flash();
+	res.locals.currentUser = req.user;
 	next();
 });
 
