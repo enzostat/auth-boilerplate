@@ -7,3 +7,14 @@
 		<% })%>
 	</div>
 <% }%>
+
+
+<% if (alerts && alerts.success) {%>
+	<div class="success-box">
+		<h2>Success:</h2>
+		<hr>
+		<% alerts.success.forEach(msg => {%>
+			<p><%= msg%></p>
+		<% })%>
+	</div>
+<% }%>

@@ -64,6 +64,13 @@ form {
 	padding: 30px 50px;
 }
 
+.success-box {
+    background-color: lightgreen;
+    color: green;
+    font-weight: bold;
+    padding: 30px 50px;
+}
+
 .container {
 	margin: 0 15%;
 	padding-top: 20px;

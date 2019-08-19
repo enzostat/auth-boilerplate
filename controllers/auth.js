@@ -1,9 +1,7 @@
 //requires
 let router = require('express').Router();
 const db = require('../models');
-
-module.exports = router;
-
+const passport = require('../config/passportConfig');
 
 
 
@@ -53,15 +51,20 @@ router.post('/signup', (req,res) => {
 
 router.get('/login', (req,res) => {
 	res.render('auth/login')
-})
+});
 
-router.post('/login', (req,res) => {
-	res.send('STUB - ToDo: Login then redirect')
-})
+router.post('/login', passport.authenticate('local', {
+	successRedirect: '/profile',
+	successFlash: 'Yay you logged in successfully!',
+	failureRedirect: '/auth/login',
+	failureFlash: 'Invalid Credentials!'
+}))
 
 router.get('/logout', (req,res) => {
 	res.render('auth/logout')
 })
 
+
+module.exports = router;
 
 

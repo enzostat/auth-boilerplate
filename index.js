@@ -2,8 +2,9 @@
 const express = require('express');
 const layouts = require('express-ejs-layouts');
 require('dotenv').config();
-const flash = require('connect-flash')
-const session = require('express-session')
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('./config/passportConfig');
 
 //instantiate the express app
 const app = express();
@@ -20,6 +21,8 @@ app.use(session({
 
 }));
 app.use(flash()); //after session
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 //Custom middleware: write data to locals for EVERY page

@@ -3,7 +3,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 //we will need access to the data base
-const db - require('../models');
+const db = require('../models');
 
 //Provide serialization and deserialization functions for passport to use 
 //this allows passport to store user by the id alone (serialize) and look 
@@ -25,15 +25,17 @@ passport.deserializeUser((id, cb) => {
 passport.use(new LocalStrategy({
 	usernameField: 'email',
 	passwordField: 'password'
-}, (email, password, cb) => {
+}, (typedInEmail, typedInPassword, cb) => {
 	//try looking up user by email
 	db.user.findOne({
-		where: { email:email }
+		where: { email: typedInEmail }
 	})
 	.then(foundUser => {
+		console.log('got a user');
+		console.log(typedInEmail,typedInPassword);
 		//if i did not find a user with that email -OR-
 		//if i did find a user but they don't have the correct password
-		if (!foundUser || !foundUser.validPassword(password)) {
+		if (!foundUser || !foundUser.validPassword(typedInPassword)) {
 			//BAD USER: return null
 			cb(null,null);
 		} else {
