@@ -30,7 +30,8 @@ app.use((req,res, next) => {
 
 
 //controllers
-app.use('/auth', require('./controllers/auth'))
+app.use('/auth', require('./controllers/auth'));
+app.use('/profile', require('./controllers/profile'));
 
 //routes
 app.get('/', (req,res) => {
