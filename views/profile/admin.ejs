@@ -1,1 +1,11 @@
-<h1>Admin page</h1>
+<h1 class="banner"><%= currentUser.firstname%>'s Super Secret Admin Profile Page</h1>
+
+
+<div>
+	<% if (currentUser.profile && currentUser.bio) {%>
+	<img src="<%= currentUser.profile%>">
+	<p><%= currentUser.bio%></p>
+	<% } else { %>
+	<p>You have no profile picture or bio</p>
+	<% }%>
+</div>

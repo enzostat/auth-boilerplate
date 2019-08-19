@@ -1,5 +1,6 @@
 <% if (alerts && alerts.error) {%>
-	<div class="error-box">
+	<div class="error-box closeable-box">
+		<button id="close-error" class="close-button">X</button>
 		<h2>Error:</h2>
 		<hr>
 		<% alerts.error.forEach(msg => {%>
@@ -10,7 +11,8 @@
 
 
 <% if (alerts && alerts.success) {%>
-	<div class="success-box">
+	<div class="success-box closeable-box">
+		<button id="close-success" class="close-button">X</button>
 		<h2>Success:</h2>
 		<hr>
 		<% alerts.success.forEach(msg => {%>
@@ -18,3 +20,15 @@
 		<% })%>
 	</div>
 <% }%>
+
+
+
+<script>
+	[...document.getElementsByClassName('close-button')].forEach(element => {
+		element.addEventListener('click', function() {
+			[...document.getElementsByClassName('closeable-box')].forEach(box => {
+				box.style.display = 'none';
+			});
+		});
+	});
+</script>
