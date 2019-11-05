@@ -5,6 +5,9 @@ require('dotenv').config();
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('./config/passportConfig');
+const helmet = require('helmet');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const db = require('./models')
 
 //instantiate the express app
 const app = express();
@@ -12,17 +15,27 @@ const app = express();
 //set up middleware or settings
 app.set('view engine', 'ejs');
 app.use(layouts);
+app.use(helmet());
+
+const sessionStore = new SequelizeStore({
+	db: db.sequelize,
+	expiration: 30*60*1000
+})
+
 app.use('/', express.static('static'));
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
 	secret: process.env.SESSION_SECRET,
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	store: sessionStore
 
 }));
+sessionStore.sync();
 app.use(flash()); //after session
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 
 //Custom middleware: write data to locals for EVERY page
